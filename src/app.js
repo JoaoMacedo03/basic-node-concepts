@@ -10,7 +10,7 @@ app.use(cors());
 
 const repositories = [];
 
-function validateProjectId(request, response, next) {
+function validateRepositoryId(request, response, next) {
   const { id } = request.params;
 
   if(!isUuid(id)) {
@@ -52,7 +52,7 @@ app.post("/repositories", (request, response) => {
   return response.json(repository);
 });
 
-app.put("/repositories/:id", validateProjectId,(request, response) => {
+app.put("/repositories/:id", validateRepositoryId,(request, response) => {
   const { idValidated, repositoryIndex } = request.params;
   const { title, url, techs } = request.body;
 
@@ -71,7 +71,7 @@ app.put("/repositories/:id", validateProjectId,(request, response) => {
   return response.json(repository);
 });
 
-app.delete("/repositories/:id", validateProjectId,(request, response) => {
+app.delete("/repositories/:id", validateRepositoryId,(request, response) => {
   const { repositoryIndex } = request.params;
 
   repositories.splice(repositoryIndex, 1);
@@ -79,7 +79,7 @@ app.delete("/repositories/:id", validateProjectId,(request, response) => {
   return response.status(204).send();
 });
 
-app.post("/repositories/:id/like", validateProjectId,(request, response) => {
+app.post("/repositories/:id/like", validateRepositoryId,(request, response) => {
   const { id } = request.params;
 
   const repository = repositories.find(repository => repository.id === id);
